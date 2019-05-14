@@ -4,21 +4,20 @@ import { Card, CardSection, Button, Input,Spinner } from './common';
 import axios from 'axios';
 import UserDetail from './UserDetail'
 class Search extends Component{
-    state={handle:'',info:{},loading:false,error:''}
+    state={handle:'',info:{},loading:false,error:'',detail:false}
     onButtonPress()
     {this.setState({error:'',loading:true})
-        axios.get(`http://codeforces.com/api/user.info?handles=${this.state.handle}`).then(response =>this.setState({info:response.data.result[0],loading:false}))
+        axios.get(`http://codeforces.com/api/user.info?handles=${this.state.handle}`)
+        .then(response =>this.setState({info:response.data.result[0],loading:false,detail:true,handle:''}))
         .catch(()=>{
-            this.setState({error:"Userhandle doesnot Exist",info:{},loading:false})
+            this.setState({error:"Userhandle doesnot Exist",info:{},loading:false,detail:false})
         });
         
     }
-    renderButton()
+    renderDetail()
     {
-      if(this.state.loading)
-      return 
-      else
-      return <Search/>
+      if(this.state.detail)
+      return  <UserDetail key={this.state.info.avatar} info={this.state.info} />
 
     }
     renderButton()
@@ -49,7 +48,7 @@ render()
           <CardSection>
              {this.renderButton()}
           </CardSection>
-          <UserDetail key={this.state.info.avatar} info={this.state.info} />
+         {this.renderDetail()}
       </Card>
     )
 }
