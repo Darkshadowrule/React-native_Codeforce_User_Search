@@ -23,7 +23,7 @@ class Search extends Component{
     renderButton()
     {
         if(this.state.loading)
-       { return   <Spinner size="large"/>
+       { return   <Spinner size="small"/>
            }
            else
         return  (  <Button  onPress ={this.onButtonPress.bind(this)}>Search</Button>);
